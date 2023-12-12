@@ -1,4 +1,4 @@
-ARG BACKEND_API="/api"
+ARG BACKEND_API="/"
 
 FROM node:18-alpine as frontend-build
 ARG BACKEND_API
