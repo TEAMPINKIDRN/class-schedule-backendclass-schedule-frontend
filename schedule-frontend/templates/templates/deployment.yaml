@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.name }}
+      tier: {{ .Release.Name }}
+      track: stable
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.name }}
+        tier: {{ .Release.Name }}
+        track: stable
+      annotations:
+        consul.hashicorp.com/connect-inject: 'true'
+    spec:
+      containers:
+        - name: {{ .Values.name }}
+          imagePullPolicy: {{ .Values.imagePullPolicy }}
+          image: {{ .Values.image }}
+          ports:
+            - name: {{ .Release.Name }}-port
+              containerPort: {{ .Values.deployment.containerPort }}
+         
+
