@@ -1,20 +1,13 @@
 pipeline {
     agent any
-
+ 
     stages {
-        stage('Build') {
+        stage('Display Branch Name') {
             steps {
-                echo 'Building..'
-            }
-        }
-        stage('Test') {
-            steps {
-                echo 'Testing..'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                echo 'Deploying....'
+                script {
+                    echo "Push made to branch: ${env.BRANCH_NAME}"
+                    // Add your additional pipeline steps here
+                }
             }
         }
     }
