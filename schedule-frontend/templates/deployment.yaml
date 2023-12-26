@@ -3,24 +3,22 @@ kind: Deployment
 metadata:
   name: {{ .Release.Name }}
 spec:
+  replicas: 2
   selector:
     matchLabels:
-      app: {{ .Values.name }}
-      tier: {{ .Release.Name }}
-      track: stable
-  replicas: {{ .Values.replicaCount }}
+      service: {{ .Release.Name }}
+      app: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app: {{ .Values.name }}
-        tier: {{ .Release.Name }}
-        track: stable
+        service: {{ .Release.Name }}
+        app: {{ .Release.Name }}
+      annotations:
+        consul.hashicorp.com/connect-inject: "true"
     spec:
+      serviceAccountName: {{ .Release.Name }}
       containers:
-        - name: {{ .Values.name }}
-          imagePullPolicy: {{ .Values.imagePullPolicy }}
-          image: {{ .Values.image }}
+        - name: {{ .Release.Name }}
+          image: nginx:latest
           ports:
-            - name: {{ .Release.Name }}-port
-              containerPort: {{ .Values.deployment.containerPort }}
-
+            - containerPort: 80

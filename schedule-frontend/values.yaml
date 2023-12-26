@@ -1,21 +1,13 @@
-image: bobrja/frontend:1
+image: bobrja/frontend:7
 replicaCount: 2
 name : schedule
 imagePullPolicy: Always
 
 deployment:
-  containerPort: 8080
+  containerPort: 80
 
 service:
   type: ClusterIP
   port: 80
-  targetPort: 80
   protocol: TCP
-
-ingress:
-  dns: "schedule.app.hrtov.xyz"
-  service:
-    number: 80
-
-secretRef: backend-secret
-configMapRef: backend-configmap
+  name: http
