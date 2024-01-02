@@ -1,4 +1,4 @@
-image: bobrja/frontend:7
+image: mneteli/pink:first
 replicaCount: 2
 name : schedule
 imagePullPolicy: Always
