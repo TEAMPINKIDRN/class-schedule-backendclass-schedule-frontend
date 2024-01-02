@@ -1,4 +1,4 @@
-image: mneteli/pink:first
+image: mneteli/nginx_front:second
 replicaCount: 2
 name : schedule
 imagePullPolicy: Always
