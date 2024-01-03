@@ -6,7 +6,7 @@ pipeline {
         nexus_url = "nexus-registry.hrtov.xyz"
         image_name = "nexus-registry.hrtov.xyz/prod/front"
         nexus_user = credentials('nexus_user')
-        repo_url = "https://nexus-registry.hrtov.xyz/service/rest/repository/browse/schedule/v2/prod/back/tags/" 
+        repo_url = "https://nexus-registry.hrtov.xyz/service/rest/repository/browse/schedule/v2/prod/front/tags/" 
         discord_webhook=credentials("discord_webhook")
       }
     stages {
