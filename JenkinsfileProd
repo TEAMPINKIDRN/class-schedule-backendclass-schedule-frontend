@@ -1,13 +1,13 @@
 pipeline {
     agent any
     environment{
-        github_branch = "PINKTEAM-17-configure-nginx-for-frontend"
+        github_branch = "main"
         github_url = "https://github.com/TEAMPINKIDRN/class-schedule-frontend.git"
         nexus_url = "nexus-registry.hrtov.xyz"
-        image_name = "nexus-registry.hrtov.xyz/stage/front"
+        image_name = "nexus-registry.hrtov.xyz/prod/front"
         nexus_user = credentials('nexus_user')
-        repo_url = "https://nexus-registry.hrtov.xyz/service/rest/repository/browse/stage/v2/stage/front/tags/"
-        
+        repo_url = "https://nexus-registry.hrtov.xyz/service/rest/repository/browse/schedule/v2/prod/back/tags/" 
+        discord_webhook=credentials("discord_webhook")
       }
     stages {
         stage('Fetch code') {
@@ -24,7 +24,6 @@ pipeline {
                 
                 sh 'docker login -u "${nexus_user_USR}" -p "${nexus_user_PSW}"  "${nexus_url}"'
                 
-                
                 }
         }
       }	
@@ -36,13 +35,19 @@ pipeline {
                 sh 'chmod +x ./new_version.sh'
                 sh './new_version.sh "$repo_url"  "$image_name" "$message"'
                
-                
                 }
-        }
-      }	
-      
-      
+            }
+       }	
     }
-
+     post {
+        success {
+            discordSend description: "Jenkins Pipeline Build", footer: "BUILD SUCCESS", link: env.BUILD_URL, result: currentBuild.currentResult, title: JOB_NAME, webhookURL: "${discord_webhook}"
+           
+        }
+        failure {
+            discordSend description: "Jenkins Pipeline Build", footer: "BUILD FAILURE", link: env.BUILD_URL, result: currentBuild.currentResult, title: JOB_NAME, webhookURL: "${discord_webhook}"
+           
+        }
+    }
     
 }
