@@ -1,0 +1,13 @@
+image: mneteli/nginx_front:second
+replicaCount: 2
+name : schedule
+imagePullPolicy: Always
+
+deployment:
+  containerPort: 80
+
+service:
+  type: ClusterIP
+  port: 80
+  protocol: TCP
+  name: http
